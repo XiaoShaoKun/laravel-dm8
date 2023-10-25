@@ -1,5 +1,5 @@
 {
-    "name": "lmo/laravel-dm8",
+    "name": "xiaoshao/laravel-dm8",
     "autoload": {
         "psr-4": {
             "Lmo\\LaravelDm8\\": "src/"
@@ -10,8 +10,8 @@
     },
     "authors": [
         {
-            "name": "lxrmido",
-            "email": "lxrmido@lxrmido.com"
+            "name": "xiaoshaokun",
+            "email": "897257036@qq.com"
         }
     ],
     "extra": {
