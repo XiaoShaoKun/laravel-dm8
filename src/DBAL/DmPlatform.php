@@ -1,5 +1,5 @@
 <?php
-namespace Lmo\LaravelDm8\DBAL;
+namespace Xiaoshao\LaravelDm8\DBAL;
 
 use Doctrine\DBAL\Schema\TableDiff;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
@@ -744,7 +744,7 @@ LEFT JOIN user_cons_columns r_cols
 
     protected function getReservedKeywordsClass()
     {
-        return 'Lmo\LaravelDm8\DBAL\DmKeywords';
+        return 'Xiaoshao\LaravelDm8\DBAL\DmKeywords';
     }
 
     /**

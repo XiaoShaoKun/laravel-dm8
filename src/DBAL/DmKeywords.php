@@ -1,9 +1,9 @@
 <?php
 
-namespace Lmo\LaravelDm8\DBAL;
+namespace Xiaoshao\LaravelDm8\DBAL;
 
 use Doctrine\DBAL\Platforms\Keywords\KeywordList;
-use Lmo\LaravelDm8\Dm8ReservedWords;
+use Xiaoshao\LaravelDm8\Dm8ReservedWords;
 
 class DmKeywords extends KeywordList {
     use Dm8ReservedWords;

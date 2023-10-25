@@ -1,9 +1,9 @@
 <?php
 
-namespace Lmo\LaravelDm8\Validation;
+namespace Xiaoshao\LaravelDm8\Validation;
 
 use Illuminate\Validation\DatabasePresenceVerifier;
-use Lmo\LaravelDm8\Dm8Connection;
+use Xiaoshao\LaravelDm8\Dm8Connection;
 
 class Dm8DatabasePresenceVerifier extends DatabasePresenceVerifier
 {

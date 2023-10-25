@@ -1,6 +1,6 @@
 <?php
 
-namespace Lmo\LaravelDm8\Query\Processors;
+namespace Xiaoshao\LaravelDm8\Query\Processors;
 
 use DateTime;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;

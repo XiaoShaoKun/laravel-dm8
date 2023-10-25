@@ -1,6 +1,6 @@
 <?php
 
-namespace Lmo\LaravelDm8\Query;
+namespace Xiaoshao\LaravelDm8\Query;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Query\Builder;

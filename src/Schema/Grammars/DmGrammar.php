@@ -1,13 +1,13 @@
 <?php
 
-namespace Lmo\LaravelDm8\Schema\Grammars;
+namespace Xiaoshao\LaravelDm8\Schema\Grammars;
 
 use Illuminate\Database\Connection;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Schema\Grammars\Grammar;
 use Illuminate\Support\Fluent;
 use Illuminate\Support\Str;
-use Lmo\LaravelDm8\Dm8ReservedWords;
+use Xiaoshao\LaravelDm8\Dm8ReservedWords;
 
 class DmGrammar extends Grammar
 {

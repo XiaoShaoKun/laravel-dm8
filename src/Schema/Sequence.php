@@ -1,6 +1,6 @@
 <?php
 
-namespace Lmo\LaravelDm8\Schema;
+namespace Xiaoshao\LaravelDm8\Schema;
 
 use Illuminate\Database\Connection;
 

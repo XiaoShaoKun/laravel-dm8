@@ -1,5 +1,5 @@
 <?php
-namespace Lmo\LaravelDm8\DBAL;
+namespace Xiaoshao\LaravelDm8\DBAL;
 
 use Doctrine\DBAL\Result;
 use Doctrine\DBAL\Schema\AbstractSchemaManager;

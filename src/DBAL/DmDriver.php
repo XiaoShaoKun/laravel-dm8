@@ -1,13 +1,13 @@
 <?php
 
-namespace Lmo\LaravelDm8\DBAL;
+namespace Xiaoshao\LaravelDm8\DBAL;
 use Doctrine\DBAL\Driver\AbstractOracleDriver;
 use Doctrine\DBAL\Driver\API\ExceptionConverter;
 use Doctrine\DBAL\Driver\PDO\Connection;
 use Doctrine\DBAL\Driver\PDO\Exception;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Lmo\LaravelDm8\DBAL\DmPlatform;
-use Lmo\LaravelDm8\DBAL\DmSchemaManager;
+use Xiaoshao\LaravelDm8\DBAL\DmPlatform;
+use Xiaoshao\LaravelDm8\DBAL\DmSchemaManager;
 use PDO;
 class DmDriver implements \Doctrine\DBAL\Driver
 {

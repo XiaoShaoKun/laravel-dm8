@@ -1,6 +1,6 @@
 <?php
 
-namespace Lmo\LaravelDm8;
+namespace Xiaoshao\LaravelDm8;
 
 use Illuminate\Support\Str;
 
