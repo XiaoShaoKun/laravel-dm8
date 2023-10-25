@@ -50,7 +50,7 @@ class Trigger
 
         return $this->connection->statement("
             create trigger $triggerName
-            before insert on {$table}
+            before insert on \"{$table}\"
             for each row
                 begin
             if :new.{$column} is null then
