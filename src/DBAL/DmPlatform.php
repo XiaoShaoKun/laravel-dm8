@@ -754,4 +754,8 @@ LEFT JOIN user_cons_columns r_cols
     {
         return 'BLOB';
     }
+    public function getCurrentDatabaseExpression(): string
+    {
+        return "SYS_CONTEXT('USERENV', 'CURRENT_SCHEMA')";
+    }
 }

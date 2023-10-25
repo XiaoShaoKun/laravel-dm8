@@ -1,6 +1,7 @@
 <?php
 namespace Lmo\LaravelDm8\DBAL;
 
+use Doctrine\DBAL\Result;
 use Doctrine\DBAL\Schema\AbstractSchemaManager;
 
 class DmSchemaManager extends AbstractSchemaManager
@@ -162,7 +163,7 @@ class DmSchemaManager extends AbstractSchemaManager
             'precision'  => $precision,
             'scale'      => $scale,
             'comment'       => (isset($tableColumn['comments'])) ? $tableColumn['comments'] : null,
-            'platformDetails' => array(),
+//            'platformDetails' => array(),
         );
 
         return new \Doctrine\DBAL\Schema\Column($tableColumn['column_name'], \Doctrine\DBAL\Types\Type::getType($type), $options);
@@ -268,4 +269,62 @@ class DmSchemaManager extends AbstractSchemaManager
             $this->dropSequence($name);
         }
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function listTableColumns($table, $database = null)
+    {
+        return $this->doListTableColumns($table, $database);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function listTableIndexes($table)
+    {
+        return $this->doListTableIndexes($table);
+    }
+
+    protected function selectTableColumns(string $databaseName, ?string $tableName = null): Result
+    {
+        $sql = 'SELECT';
+
+        if ($tableName === null) {
+            $sql .= ' C.TABLE_NAME,';
+        }
+
+        $sql .= <<<'SQL'
+                 C.COLUMN_NAME,
+                 C.DATA_TYPE,
+                 C.DATA_DEFAULT,
+                 C.DATA_PRECISION,
+                 C.DATA_SCALE,
+                 C.CHAR_LENGTH,
+                 C.DATA_LENGTH,
+                 C.NULLABLE,
+                 D.COMMENTS
+            FROM ALL_TAB_COLUMNS C
+        INNER JOIN ALL_TABLES T
+            ON T.OWNER = C.OWNER
+            AND T.TABLE_NAME = C.TABLE_NAME
+       LEFT JOIN ALL_COL_COMMENTS D
+           ON D.OWNER = C.OWNER
+                  AND D.TABLE_NAME = C.TABLE_NAME
+                  AND D.COLUMN_NAME = C.COLUMN_NAME
+SQL;
+
+        $conditions = ['C.OWNER = :OWNER'];
+        $params     = ['OWNER' => $databaseName];
+
+        if ($tableName !== null) {
+            $conditions[]         = 'C.TABLE_NAME = :TABLE_NAME';
+            $params['TABLE_NAME'] = $tableName;
+        }
+
+        $sql .= ' WHERE ' . implode(' AND ', $conditions) . ' ORDER BY C.COLUMN_ID';
+
+        return $this->_conn->executeQuery($sql, $params);
+    }
+
 }

@@ -1,20 +1,22 @@
 <?php
 
 namespace Lmo\LaravelDm8\DBAL;
+use Doctrine\DBAL\Driver\AbstractOracleDriver;
+use Doctrine\DBAL\Driver\API\ExceptionConverter;
+use Doctrine\DBAL\Driver\PDO\Connection;
+use Doctrine\DBAL\Driver\PDO\Exception;
+use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Lmo\LaravelDm8\DBAL\DmPlatform;
 use Lmo\LaravelDm8\DBAL\DmSchemaManager;
-
+use PDO;
 class DmDriver implements \Doctrine\DBAL\Driver
 {
 
-    public function connect(array $params, $username = null, $password = null, array $driverOptions = array())
-    {
-        return new \Doctrine\DBAL\Driver\PDOConnection(
-            $this->_constructPdoDsn($params),
-            $username,
-            $password,
-            $driverOptions
-        );
+    public function connect(
+        #[SensitiveParameter]
+        array $params
+    ) {
+        return new Connection($params['pdo']);
     }
 
     /**
@@ -56,9 +58,12 @@ class DmDriver implements \Doctrine\DBAL\Driver
         return new DmPlatform();
     }
 
-    public function getSchemaManager(\Doctrine\DBAL\Connection $conn)
+    public function getSchemaManager(\Doctrine\DBAL\Connection $conn,AbstractPlatform $platform = null)
     {
-        return new DmSchemaManager($conn);
+        if ($platform == null) {
+            $platform = $this->getDatabasePlatform();
+        }
+        return new DmSchemaManager($conn,$platform);
     }
 
     public function getName()
@@ -70,5 +75,10 @@ class DmDriver implements \Doctrine\DBAL\Driver
     {
         $params = $conn->getParams();
         return $params['dbname'];
+    }
+
+    public function getExceptionConverter(): ExceptionConverter
+    {
+
     }
 }
