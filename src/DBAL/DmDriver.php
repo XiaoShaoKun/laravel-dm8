@@ -13,8 +13,7 @@ class DmDriver implements \Doctrine\DBAL\Driver
 {
 
     public function connect(
-        #[SensitiveParameter]
-        array $params
+        array $params, $username = null, $password = null, array $driverOptions = []
     ) {
         return new Connection($params['pdo']);
     }

@@ -3,6 +3,8 @@ namespace Xiaoshao\LaravelDm8\DBAL;
 
 use Doctrine\DBAL\Result;
 use Doctrine\DBAL\Schema\AbstractSchemaManager;
+use Doctrine\DBAL\Schema\Identifier;
+use Doctrine\Deprecations\Deprecation;
 
 class DmSchemaManager extends AbstractSchemaManager
 {
@@ -278,6 +280,26 @@ class DmSchemaManager extends AbstractSchemaManager
         return $this->doListTableColumns($table, $database);
     }
 
+    protected function doListTableColumns($table, $database = null): array
+    {
+        if ($database === null) {
+            $database = $this->getDatabase(__METHOD__);
+        } else {
+            Deprecation::triggerIfCalledFromOutside(
+                'doctrine/dbal',
+                'https://github.com/doctrine/dbal/issues/5284',
+                'Passing $database to AbstractSchemaManager::doListTableColumns() is deprecated.',
+            );
+        }
+
+        return $this->_getPortableTableColumnList(
+            $table,
+            $database,
+            $this->selectTableColumns($database, $this->normalizeName($table))
+                ->fetchAllAssociative(),
+        );
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -327,4 +349,15 @@ SQL;
         return $this->_conn->executeQuery($sql, $params);
     }
 
+    /**
+     * An extension point for those platforms where case sensitivity of the object name depends on whether it's quoted.
+     *
+     * Such platforms should convert a possibly quoted name into a value of the corresponding case.
+     */
+    protected function normalizeName(string $name): string
+    {
+        $identifier = new Identifier($name);
+
+        return $identifier->getName();
+    }
 }
